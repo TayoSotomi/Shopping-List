@@ -9,7 +9,6 @@ Console.WriteLine();
 
 bool NextOrder = true;
 List<string> Cart = new List<string>();
-string input;
 
 
 while (NextOrder)
@@ -34,69 +33,71 @@ while (NextOrder)
     Console.WriteLine();
     
     bool ToContinue = true;
+    string input= " ";
 
-    
+
+    while (ToContinue == true)
+    {
         Console.Write("what item would you like to order? \n");
         input = Console.ReadLine().Trim().ToLower();
-         
-       
-         Cart.Add(input);
+
+
+        Cart.Add(input);
         string receipt = " ";
 
 
         if (Menu.ContainsKey(input))
         {
-            ToContinue = false;
-            
+            break;
 
-            Console.WriteLine($"Adding {input} to cart at ${Menu[input]}");
-
-            
         }
         else
         {
             ToContinue = true;
             Console.WriteLine("Does not exist");
 
-            Console.WriteLine("Please enter valid item");
-        }         
-     
-    Console.WriteLine("Would you like to add another item? (y/n)");
-    string nextOrder = Console.ReadLine().Trim().ToLower();
-    decimal total = 0;
-
-    if (nextOrder == "y")
-    {
-        NextOrder= true;
+            Console.WriteLine("Please look at the menu and enter valid item");
+        }
     }
-    else if(nextOrder == "n") 
-    {
-    NextOrder= false;
-        Console.WriteLine("Thanks for your order");
-        Console.WriteLine("Here is what you order!");
-        Console.WriteLine();
-        foreach (string c in Cart)
+        Console.WriteLine($"Adding {input} to cart at ${Menu[input]}");
+
+        Console.WriteLine("Would you like to add another item? (y/n)");
+        string nextOrder = Console.ReadLine().Trim().ToLower();
+        decimal total = 0;
+
+        if (nextOrder == "y")
         {
-            Console.WriteLine($"{c}\t${Menu[c]}\n");
-        
-            List<decimal> list = new List<decimal>()
+            NextOrder = true;
+        }
+        else if (nextOrder == "n")
+        {
+            NextOrder = false;
+            Console.WriteLine("Thanks for your order");
+            Console.WriteLine("Here is what you order!");
+            Console.WriteLine();
+            foreach (string c in Cart)
+            {
+                Console.WriteLine($"{c}\t${Menu[c]}\n");
+
+                List<decimal> list = new List<decimal>()
             {
                 Menu[c],
             };
-            foreach (decimal d in list)
-            {
-                total += d;
+                foreach (decimal d in list)
+                {
+                    total += d;
 
+                }
             }
-        }          
-        
-        Console.WriteLine($" Average price per item in order was {Math.Round(total / Cart.Count,2)}");
 
-    }
-    else
-    {
-        NextOrder= false;
-    }
+            Console.WriteLine($" Average price per item in order was {Math.Round(total / Cart.Count, 2)}");
+
+        }
+        else
+        {
+            NextOrder = false;
+        }
+       
 }
 
 
